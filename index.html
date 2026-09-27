@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Para ti, princess ❤️</title>
+<meta name="theme-color" content="#0b0b12">
+<meta property="og:title" content="Para ti, princess ❤️">
+<meta property="og:description" content="Ábrelo cuando estés sola.">
+<meta property="og:type" content="website">
+<style>
+  /* ==== EDITABLE: el nombre está en el <script> de hasta abajo, en la constante ELLA ==== */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{
+    --rojo:#e8232a; --rojo-osc:#b3131a; --azul:#1b3fb8; --crema:#fff6ee;
+    --tinta:#0b0b12; --oro:#ffcf5c;
+    --f: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  }
+  html,body{height:100%}
+  body{
+    font-family:var(--f); background:var(--tinta); color:var(--crema);
+    min-height:100svh; overflow-x:hidden; overscroll-behavior:none;
+    background-image:
+      radial-gradient(1000px 700px at 15% -10%, rgba(232,35,42,.30), transparent 60%),
+      radial-gradient(900px 700px at 90% 110%, rgba(27,63,184,.35), transparent 60%);
+    background-attachment:fixed;
+  }
+  /* telón de fondo de "cine" */
+  body::after{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.35;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 3px);
+  }
+  /* flex + margin:auto en el hijo (no place-items:center): centra igual, pero si la
+     pantalla es más alta que el celular sí deja hacer scroll en vez de cortar arriba */
+  .wrap{
+    position:relative; z-index:2; min-height:100svh; display:flex;
+    padding:calc(20px + env(safe-area-inset-top)) 20px calc(36px + env(safe-area-inset-bottom));
+  }
+  .pantalla{display:none; width:100%; max-width:430px; margin:auto; text-align:center; animation:entra .55s cubic-bezier(.2,.8,.2,1) both}
+  .pantalla.on{display:block}
+  @keyframes entra{from{opacity:0; transform:translateY(18px) scale(.97)}to{opacity:1; transform:none}}
+
+  .kicker{font-size:12px; letter-spacing:.22em; text-transform:uppercase; opacity:.6; margin-bottom:14px}
+  h1{font-size:clamp(28px,8vw,38px); line-height:1.1; letter-spacing:-.02em; font-weight:800}
+  h2{font-size:clamp(22px,6.5vw,30px); line-height:1.15; letter-spacing:-.01em; font-weight:800}
+  p.sub{margin-top:14px; font-size:16px; line-height:1.55; opacity:.8}
+
+  .btn{
+    display:inline-block; border:0; cursor:pointer; font-family:var(--f); font-weight:700; font-size:17px;
+    padding:16px 30px; border-radius:999px; color:#fff; background:linear-gradient(180deg,var(--rojo),var(--rojo-osc));
+    box-shadow:0 10px 30px rgba(232,35,42,.4); transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:active{transform:scale(.96)}
+  .btn.ghost{background:transparent; box-shadow:none; border:1.5px solid rgba(255,246,238,.28); color:var(--crema); font-weight:600; font-size:15px; padding:13px 24px}
+
+  /* ---------- 1. sobre ---------- */
+  .sobre{width:250px; height:168px; margin:34px auto 0; position:relative; cursor:pointer; animation:flota 3.6s ease-in-out infinite}
+  @keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+  .sobre .cuerpo{position:absolute; inset:0; background:linear-gradient(160deg,#fff6ee,#e8d9cb); border-radius:12px; box-shadow:0 26px 50px rgba(0,0,0,.55)}
+  .sobre .solapa{
+    position:absolute; top:0; left:0; width:100%; height:0; border-left:125px solid transparent;
+    border-right:125px solid transparent; border-top:98px solid #f3e4d6; transform-origin:top;
+    transition:transform .7s cubic-bezier(.6,-.2,.3,1.4); z-index:3; filter:brightness(.97)
+  }
+  .sobre.abierto .solapa{transform:rotateX(180deg); z-index:1}
+  .sobre .sello{
+    position:absolute; top:76px; left:50%; transform:translate(-50%,-50%); width:52px; height:52px; border-radius:50%;
+    background:linear-gradient(180deg,var(--rojo),var(--rojo-osc)); z-index:4; display:grid; place-items:center;
+    font-size:24px; box-shadow:0 6px 16px rgba(0,0,0,.4); transition:opacity .3s, transform .3s
+  }
+  .sobre.abierto .sello{opacity:0; transform:translate(-50%,-50%) scale(.4)}
+  .sobre .papel{
+    position:absolute; left:14px; right:14px; top:26px; height:110px; background:#fff; border-radius:6px; z-index:2;
+    transition:transform .6s .25s cubic-bezier(.2,.9,.3,1.3); display:grid; place-items:center; color:#111; font-weight:800; font-size:15px;
+  }
+  .sobre.abierto .papel{transform:translateY(-46px)}
+  .toca{margin-top:26px; font-size:14px; letter-spacing:.12em; text-transform:uppercase; opacity:.55; animation:late 1.8s ease-in-out infinite}
+  @keyframes late{0%,100%{opacity:.35}50%{opacity:.85}}
+
+  /* ---------- 2. la pregunta ---------- */
+  .fila{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:30px; position:relative; min-height:120px}
+  #noBtn{position:relative; transition:transform .28s cubic-bezier(.3,1.4,.5,1)}
+
+  /* ---------- 3. pistas ---------- */
+  .pistas{display:grid; gap:12px; margin-top:26px}
+  .carta{perspective:1000px; height:86px; cursor:pointer}
+  .cara{position:relative; width:100%; height:100%; transition:transform .6s cubic-bezier(.3,1,.4,1); transform-style:preserve-3d}
+  .carta.flip .cara{transform:rotateY(180deg)}
+  .lado{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:16px; display:grid; place-items:center; padding:14px; font-weight:700; font-size:16px; line-height:1.35}
+  .frente{background:rgba(255,246,238,.07); border:1.5px dashed rgba(255,246,238,.3)}
+  .frente span{opacity:.75; font-size:14px; letter-spacing:.1em; text-transform:uppercase}
+  .detras{background:linear-gradient(150deg,var(--azul),#0d1f66); transform:rotateY(180deg); box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+
+  /* ---------- 4. raspa ---------- */
+  .escena{position:relative; margin:24px auto 0; width:100%; max-width:360px}
+  .boleto{
+    position:relative; background:linear-gradient(165deg,var(--rojo),#c8161d); border-radius:20px; padding:22px 20px 26px;
+    text-align:left; color:#fff; box-shadow:0 24px 60px rgba(0,0,0,.6);
+  }
+  .boleto::before,.boleto::after{content:""; position:absolute; width:30px; height:30px; background:var(--tinta); border-radius:50%; top:calc(58% - 15px)}
+  .boleto::before{left:-15px} .boleto::after{right:-15px}
+  .b-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; border-bottom:1.5px dashed rgba(255,255,255,.4); padding-bottom:14px}
+  .b-marca{font-weight:900; letter-spacing:.16em; font-size:13px}
+  .b-fecha{text-align:right; font-size:13px; font-weight:700; line-height:1.4}
+  .b-fecha small{display:block; font-weight:600; opacity:.75; letter-spacing:.14em; font-size:10px; text-transform:uppercase}
+  .b-peli{margin-top:16px}
+  .b-peli small{letter-spacing:.16em; font-size:10px; text-transform:uppercase; opacity:.8; font-weight:700}
+  .b-peli h3{font-size:26px; line-height:1.08; margin-top:5px; letter-spacing:-.02em; font-weight:800}
+  .b-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:10px; margin-top:20px}
+  .b-grid div small{display:block; letter-spacing:.14em; font-size:9px; text-transform:uppercase; opacity:.78; font-weight:700; margin-bottom:3px}
+  .b-grid div b{font-size:15px; font-weight:700}
+  .rasca{position:absolute; inset:0; border-radius:20px; touch-action:none; cursor:grab; z-index:5}
+  .rasca-hint{position:absolute; inset:0; display:grid; place-items:center; z-index:6; pointer-events:none; text-align:center; padding:20px}
+  .rasca-hint b{display:block; font-size:19px; margin-bottom:6px}
+  .rasca-hint span{font-size:14px; opacity:.7}
+  .rasca-hint .dedo{font-size:38px; display:block; margin-bottom:10px; animation:rasp 1.4s ease-in-out infinite}
+  @keyframes rasp{0%,100%{transform:translateX(-26px) rotate(-8deg)}50%{transform:translateX(26px) rotate(8deg)}}
+  .oculto{opacity:0; transition:opacity .45s; pointer-events:none}
+
+  /* ---------- 5. final ---------- */
+  .cuenta{display:flex; gap:8px; justify-content:center; margin:24px 0 6px}
+  .cuenta div{background:rgba(255,246,238,.08); border:1px solid rgba(255,246,238,.14); border-radius:14px; padding:11px 4px; flex:1 1 0; min-width:0}
+  .cuenta b{display:block; font-size:24px; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+  .cuenta small{font-size:9.5px; letter-spacing:.15em; text-transform:uppercase; opacity:.6}
+  .plan{text-align:left; background:rgba(255,246,238,.06); border:1px solid rgba(255,246,238,.13); border-radius:18px; padding:18px 18px 16px; margin-top:20px}
+  .plan h4{font-size:11px; letter-spacing:.2em; text-transform:uppercase; opacity:.6; margin-bottom:12px; font-weight:700}
+  .plan li{list-style:none; display:flex; gap:12px; padding:9px 0; font-size:15.5px; line-height:1.4; border-top:1px solid rgba(255,246,238,.09)}
+  .plan li:first-of-type{border-top:0}
+  .plan li i{font-style:normal; font-size:18px; width:24px; flex-shrink:0; text-align:center}
+  /* la cocaaaa: cada "a" extra rebota un poquito, en cascada */
+  .coca{font-weight:800; color:var(--oro); white-space:nowrap}
+  .coca em{font-style:normal; display:inline-block; animation:aaa 1.5s ease-in-out infinite}
+  .coca em:nth-of-type(2){animation-delay:.11s}
+  .coca em:nth-of-type(3){animation-delay:.22s}
+  .coca em:nth-of-type(4){animation-delay:.33s}
+  @keyframes aaa{0%,60%,100%{transform:translateY(0) scale(1)}30%{transform:translateY(-4px) scale(1.16)}}
+  /* la dedicatoria: el remate del final */
+  .dedica{position:relative; margin:26px 4px 4px; padding:22px 6px 4px; text-align:center}
+  .dedica::before{
+    content:"“"; position:absolute; top:-14px; left:50%; transform:translateX(-50%);
+    font-size:64px; line-height:1; color:var(--oro); opacity:.35; font-family:Georgia,serif;
+  }
+  .dedica p{font-size:18px; line-height:1.6; font-style:italic; opacity:.92; letter-spacing:.01em}
+  .dedica p b{font-style:normal; font-weight:800; color:var(--oro); display:inline-block; animation:pulso 2.6s ease-in-out infinite}
+  @keyframes pulso{0%,100%{transform:scale(1); text-shadow:0 0 0 rgba(255,207,92,0)}50%{transform:scale(1.06); text-shadow:0 0 18px rgba(255,207,92,.5)}}
+  .acciones{display:grid; gap:10px; margin-top:22px}
+  .acciones a{text-decoration:none; display:block}
+  .pie{margin-top:26px; font-size:13px; opacity:.45; line-height:1.6}
+  canvas.confeti{position:fixed; inset:0; z-index:99; pointer-events:none}
+
+  /* celulares chicos (iPhone SE / mini) */
+  @media (max-width:365px){
+    .sobre{width:220px; height:148px}
+    .sobre .solapa{border-left-width:110px; border-right-width:110px; border-top-width:86px}
+    .b-peli h3{font-size:23px}
+    .b-grid{grid-template-columns:1.3fr 1fr 1fr; gap:7px}
+    .b-grid div b{font-size:13.5px}
+    .cuenta{gap:6px}
+    .cuenta b{font-size:21px}
+    .plan li{font-size:14.5px}
+    .dedica p{font-size:16.5px}
+  }
+  /* si el celular tiene reducir movimiento activado, se calma todo */
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important}
+  }
+</style>
+<style>
+  /* ---- ella escribe la peli ---- */
+  .campo{margin-top:22px}
+  .campo input{
+    width:100%; padding:18px 16px; border-radius:16px; text-align:center;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.18);
+    color:var(--crema); font-family:var(--f); font-size:18px; font-weight:600;
+    outline:none; transition:border-color .25s, background .25s;
+  }
+  .campo input::placeholder{color:rgba(255,246,238,.38); font-weight:400}
+  .campo input:focus{border-color:var(--oro); background:rgba(255,207,92,.08)}
+  .marquesina{
+    position:relative; margin:0 auto 4px; max-width:330px;
+    border:1px solid rgba(255,207,92,.45); border-radius:16px; padding:16px 14px;
+    background:linear-gradient(180deg, rgba(255,207,92,.12), rgba(255,255,255,.03));
+  }
+  .marquesina .focos{display:flex; justify-content:center; gap:8px; margin-bottom:10px}
+  .marquesina .focos i{
+    width:7px; height:7px; border-radius:50%; background:var(--oro); display:block;
+    animation:foco 1.4s ease-in-out infinite;
+  }
+  .marquesina .focos i:nth-child(2){animation-delay:.18s}
+  .marquesina .focos i:nth-child(3){animation-delay:.36s}
+  .marquesina .focos i:nth-child(4){animation-delay:.54s}
+  .marquesina .focos i:nth-child(5){animation-delay:.72s}
+  @keyframes foco{0%,100%{opacity:.35}50%{opacity:1}}
+  .marquesina small{display:block; font-size:11px; letter-spacing:.2em; text-transform:uppercase; opacity:.65; margin-bottom:6px}
+  .marquesina b{font-size:20px; color:var(--oro); line-height:1.25; display:block; word-break:break-word}
+  .elegida{margin-top:20px; opacity:0; transform:translateY(8px); transition:.45s; pointer-events:none}
+  .elegida.on{opacity:1; transform:none; pointer-events:auto}
+  /* ---- las dos pantallas del final ---- */
+  .dospant{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:10px; margin:22px 0 4px}
+  .dospant .p{border:1px solid rgba(255,255,255,.16); border-radius:12px; padding:14px 8px; background:rgba(255,255,255,.04)}
+  .dospant .p b{display:block; font-size:22px; line-height:1}
+  .dospant .p small{display:block; font-size:10px; letter-spacing:.16em; text-transform:uppercase; opacity:.6; margin-top:6px}
+  .dospant .lazo{font-size:20px; opacity:.85; animation:lat 1.8s ease-in-out infinite}
+  @keyframes lat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+</style>
+</head>
+
+<body>
+<canvas class="confeti" id="confeti"></canvas>
+<div class="wrap">
+
+  <!-- 1 · sobre -->
+  <section class="pantalla on" id="p1">
+    <div class="kicker" id="kicker1">Entrega especial</div>
+    <h1>Tienes un mensaje<br>sin abrir</h1>
+    <div class="sobre" id="sobre">
+      <div class="cuerpo"></div>
+      <div class="papel" id="papel">Ábreme 👀</div>
+      <div class="solapa"></div>
+      <div class="sello">✦</div>
+    </div>
+    <div class="toca" id="toca">toca el sobre</div>
+  </section>
+
+  <!-- 2 · la pregunta -->
+  <section class="pantalla" id="p2">
+    <div class="kicker">Pregunta seria</div>
+    <h2 id="preg">¿Tienes algo que hacer<br>hoy en la noche?</h2>
+    <p class="sub">Piénsalo bien antes de contestar.</p>
+    <div class="fila">
+      <button class="btn" id="siBtn">Nada, estoy libre</button>
+      <button class="btn ghost" id="noBtn">Ando ocupadísima</button>
+    </div>
+  </section>
+
+  <!-- 3 · pistas -->
+  <section class="pantalla" id="p3">
+    <div class="kicker">Tres pistas</div>
+    <h2>Adivina qué<br>vamos a hacer</h2>
+    <p class="sub">Toca cada una para voltearla.</p>
+    <div class="pistas">
+      <div class="carta"><div class="cara">
+        <div class="lado frente"><span>Pista 1</span></div>
+        <div class="lado detras">No tienes que arreglarte. Ni salir de tu cama 🛋️</div></div></div>
+      <div class="carta"><div class="cara">
+        <div class="lado frente"><span>Pista 2</span></div>
+        <div class="lado detras">Estoy a horas de ti y aun así voy a estar contigo 📱</div></div></div>
+      <div class="carta"><div class="cara">
+        <div class="lado frente"><span>Pista 3</span></div>
+        <div class="lado detras">Y esta vez mandas tú: tú escoges qué vemos 🎬</div></div></div>
+    </div>
+    <div id="p3btn" style="margin-top:24px; opacity:0; transition:opacity .5s; pointer-events:none">
+      <button class="btn" id="aCartelera">Ya sé qué es →</button>
+    </div>
+  </section>
+
+  <!-- 4 · ella escribe la peli -->
+  <section class="pantalla" id="p4">
+    <div class="kicker">Función de esta noche</div>
+    <h2>Tú eliges</h2>
+    <p class="sub">La que tú quieras. Yo la veo contigo,<br>aunque ya la hayamos visto mil veces.</p>
+
+    <div class="marquesina">
+      <div class="focos"><i></i><i></i><i></i><i></i><i></i></div>
+      <small>Hoy vemos</small>
+      <b id="marquesinaTxt">la que tú digas</b>
+    </div>
+
+    <div class="campo">
+      <input id="peliInput" type="text" inputmode="text" autocomplete="off"
+             maxlength="60" placeholder="Escribe aquí la película…">
+    </div>
+
+    <div class="elegida" id="elegida">
+      <button class="btn" id="aFinal" style="width:100%">Esa quiero ver →</button>
+    </div>
+  </section>
+
+  <!-- 5 · el plan -->
+  <section class="pantalla" id="p5">
+    <div class="kicker">Confirmado</div>
+    <h2 id="final">Es una cita 🎬</h2>
+    <p class="sub">Hoy la sala es de dos ciudades.<br><b style="color:var(--oro)">Corre por tus papas, empezamos a las 8:45.</b></p>
+
+    <div class="dospant">
+      <div class="p"><b>📱</b><small>Tu pantalla</small></div>
+      <div class="lazo">❤️</div>
+      <div class="p"><b>📱</b><small>La mía</small></div>
+    </div>
+
+    <div class="cuenta" id="cuenta">
+      <div><b id="cd">--</b><small>Días</small></div>
+      <div><b id="ch">--</b><small>Horas</small></div>
+      <div><b id="cm">--</b><small>Min</small></div>
+      <div><b id="cs">--</b><small>Seg</small></div>
+    </div>
+
+    <div class="plan">
+      <h4>El plan</h4>
+      <ul>
+        <li><i>💸</i><span>Ya te deposité. Ve <b>ahorita</b> por tus papas y tu Philadelphia 🏃‍♀️</span></li>
+        <li><i>📞</i><span>Te marco a las <b id="horaPlan">20:45</b>. No te duermas antes 👀</span></li>
+        <li><i>🎬</i><span>Vemos <b id="planPeli">la que elegiste</b> — porque la elegiste tú</span></li>
+        <li><i>▶️</i><span>Le damos play al mismo tiempo, a la cuenta de tres</span></li>
+        <li><i>🥤</i><span>Y yo con mi <span class="coca">coc<em>a</em><em>a</em><em>a</em><em>a</em></span>, obviamente</span></li>
+        <li><i>💤</i><span>Y si te duermes a media película, no te despierto</span></li>
+      </ul>
+    </div>
+
+    <div class="dedica">
+      <p>Me gusta que aun estando lejos<br>sigas siendo mi lugar favorito.<br><br>
+      Hoy no puedo pasar por ti,<br>pero puedo apagar la luz, darle play<br>al mismo tiempo que tú<br>y quedarme contigo hasta los créditos.<br><br>
+      <b>Te amo, princesa.</b></p>
+    </div>
+
+    <div class="acciones">
+      <a id="wa" href="#"><button class="btn" style="width:100%">Mandarme mi película 💬</button></a>
+    </div>
+    <div class="pie">Ponte cómoda.<br>Yo llevo la coca y tú la película.<br><br>— tu Ferny</div>
+  </section>
+</div>
+
+<script>
+/* ===================== PERSONALIZA AQUÍ ===================== */
+var ELLA  = "Princess";
+var HORA  = "20:45";                        // hora de la videollamada
+var FECHA = "2026-09-26T20:45:00-06:00";    // hoy, horario de Guadalajara
+var WA    = "5213117408139";                    // ⚠️ el WhatsApp de Dalí, formato 5213311234567
+/* =========================================================== */
+
+var elegida = "";
+function $(id){return document.getElementById(id)}
+function ver(id){
+  var ps = document.querySelectorAll('.pantalla');
+  for(var i=0;i<ps.length;i++) ps[i].classList.remove('on');
+  $(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+/* 1 · sobre */
+$('sobre').addEventListener('click', function(){
+  $('papel').style.transform='translateY(-46px)';
+  setTimeout(function(){ver('p2')}, 620);
+});
+
+/* 2 · el botón que huye */
+var huidas = 0;
+var no = $('noBtn');
+function huir(){
+  huidas++;
+  if(huidas>=4){ no.textContent='Ok, sí estoy libre 😅'; no.style.transform='none';
+                 no.onclick=function(){ver('p3')}; return; }
+  var dx=(Math.random()*150-75), dy=(Math.random()*80-40);
+  no.style.transform='translate('+dx+'px,'+dy+'px)';
+  var frases=['¿Segura? 🤨','Mentirosa 😌','Inténtalo otra vez'];
+  no.textContent=frases[Math.min(huidas-1,2)];
+}
+no.addEventListener('mouseenter',huir);
+no.addEventListener('touchstart',function(e){e.preventDefault();huir()},{passive:false});
+no.addEventListener('click',function(e){e.preventDefault();huir()});
+$('siBtn').addEventListener('click', function(){ver('p3')});
+
+/* 3 · pistas */
+var vueltas=0;
+var cartas = document.querySelectorAll('.carta');
+for(var i=0;i<cartas.length;i++){
+  (function(c){
+    c.addEventListener('click', function(){
+      if(c.classList.contains('flip')) return;
+      c.classList.add('flip'); vueltas++;
+      if(vueltas>=3){ var b=$('p3btn'); b.style.opacity='1'; b.style.pointerEvents='auto'; }
+    });
+  })(cartas[i]);
+}
+$('aCartelera').addEventListener('click', function(){ ver('p4'); });
+
+/* 4 · ella escribe la película */
+var inp = $('peliInput');
+inp.addEventListener('input', function(){
+  elegida = inp.value.trim();
+  $('marquesinaTxt').textContent = elegida ? elegida : 'la que tú digas';
+  if(elegida.length >= 2) $('elegida').classList.add('on');
+  else $('elegida').classList.remove('on');
+});
+inp.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); inp.blur(); } });
+
+$('aFinal').addEventListener('click', function(){
+  elegida = inp.value.trim();
+  if(elegida.length < 2) return;
+  $('planPeli').textContent = elegida;
+  $('horaPlan').textContent = HORA;
+  var msg = 'Ya elegí: ' + elegida + ' 🎬 Nos vemos a las ' + HORA + ', no llegues tarde ❤️';
+  $('wa').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
+  ver('p5'); confeti();
+});
+
+/* 5 · cuenta regresiva */
+var meta = new Date(FECHA).getTime();
+function dos(n){ return (n<10?'0':'') + n; }
+function tic(){
+  var d = meta - Date.now();
+  if(d < 0){ $('cuenta').innerHTML = '<div style="grid-column:1/-1"><b>Ya es hora</b><small>dale play</small></div>'; return; }
+  var s=Math.floor(d/1000), dd=Math.floor(s/86400), hh=Math.floor(s%86400/3600), mm=Math.floor(s%3600/60), ss=s%60;
+  $('cd').textContent=dd; $('ch').textContent=dos(hh); $('cm').textContent=dos(mm); $('cs').textContent=dos(ss);
+}
+tic(); setInterval(tic,1000);
+
+/* confeti */
+var cv=$('confeti'), ctx=cv.getContext('2d'), trozos=[];
+function medir(){ cv.width=window.innerWidth; cv.height=window.innerHeight; }
+medir(); window.addEventListener('resize',medir);
+function confeti(){
+  var colores=['#e8232a','#ffcf5c','#1b3fb8','#fff6ee'];
+  for(var i=0;i<70;i++) trozos.push({x:Math.random()*cv.width, y:-20-Math.random()*120,
+    vx:(Math.random()-.5)*2.4, vy:2+Math.random()*3, r:3+Math.random()*4,
+    c:colores[Math.floor(Math.random()*4)], g:Math.random()*6});
+}
+(function pinta(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  var vivos=[];
+  for(var i=0;i<trozos.length;i++){
+    var t=trozos[i];
+    t.x+=t.vx; t.y+=t.vy; t.g+=.1;
+    if(t.y < cv.height+40){
+      ctx.save(); ctx.translate(t.x,t.y); ctx.rotate(t.g);
+      ctx.fillStyle=t.c; ctx.fillRect(-t.r,-t.r/2,t.r*2,t.r);
+      ctx.restore();
+      vivos.push(t);
+    }
+  }
+  trozos=vivos;
+  requestAnimationFrame(pinta);
+})();
+</script>
+</body>
+</html>
